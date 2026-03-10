@@ -191,7 +191,7 @@ class TileIconButtonState extends State<TileIconButton> {
           width: 34,
           height: 34,
           decoration: BoxDecoration(
-            color: widget.color.withOpacity(0.1),
+            color: widget.color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(widget.icon, color: widget.color, size: 16),

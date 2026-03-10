@@ -14,7 +14,7 @@ class FormField extends StatelessWidget {
   final bool showDivider;
   final Color dividerColor;
   final ValueChanged<String>? onChanged;
-  
+
   final dynamic trailing;
 
   const FormField({
@@ -60,14 +60,14 @@ class FormField extends StatelessWidget {
                   ),
                   placeholderStyle: TextStyle(
                     color: isDark
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
+                        ? Colors.white.withValues(alpha: 0.3)
+                        : Colors.black.withValues(alpha: 0.3),
                     fontSize: 16,
                   ),
                   decoration: const BoxDecoration(color: Colors.transparent),
                 ),
               ),
-              if (trailing != null) trailing!,
+              ?trailing,
             ],
           ),
         ),

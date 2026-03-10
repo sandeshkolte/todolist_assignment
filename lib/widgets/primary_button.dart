@@ -40,7 +40,7 @@ class PrimaryButtonState extends State<PrimaryButton> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: widget.accentColor.withOpacity(0.35),
+                color: widget.accentColor.withValues(alpha: 0.35),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),

@@ -33,9 +33,12 @@ class _DashboardScreenState extends State<DashboardScreen>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
+    final provider = context.read<TaskProvider>();
     Future.microtask(() async {
-      await context.read<TaskProvider>().fetchTasks();
-      _listController.forward();
+      await provider.fetchTasks();
+      if (mounted) {
+        _listController.forward();
+      }
     });
   }
 
@@ -126,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
     final cardColor = isDark
         ? const Color(0xFF1C1C1E)
-        : Colors.white.withOpacity(0.85);
+        : Colors.white.withValues(alpha: 0.85);
     final textPrimary = isDark ? Colors.white : const Color(0xFF1C1C1E);
     final textSecondary = isDark
         ? const Color(0xFF8E8E93)
@@ -196,10 +199,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                       onTap: () async {
                         HapticFeedback.lightImpact();
                         await Supabase.instance.client.auth.signOut();
-                        Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(builder: (_) => LoginScreen()),
-                        );
+                        if (mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(builder: (_) => LoginScreen()),
+                          );
+                        }
                       },
                     ),
                   ],
@@ -260,7 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
                         itemCount: provider.tasks.length,
-                        separatorBuilder: (_, __) => Padding(
+                        separatorBuilder: (_, _) => Padding(
                           padding: const EdgeInsets.only(left: 68),
                           child: Divider(
                             height: 1,
@@ -356,8 +361,8 @@ class _ProgressCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: isDark
-                  ? Colors.white.withOpacity(0.08)
-                  : Colors.white.withOpacity(0.6),
+                  ? Colors.white.withValues(alpha: 0.08)
+                  : Colors.white.withValues(alpha: 0.6),
               width: 0.5,
             ),
           ),
@@ -399,7 +404,7 @@ class _ProgressCard extends StatelessWidget {
                     height: 50,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: accentColor.withOpacity(0.12),
+                      color: accentColor.withValues(alpha: 0.12),
                     ),
                     child: Center(
                       child: Text(
@@ -421,12 +426,12 @@ class _ProgressCard extends StatelessWidget {
                   tween: Tween(begin: 0, end: progress),
                   duration: const Duration(milliseconds: 800),
                   curve: Curves.easeOutCubic,
-                  builder: (_, value, __) => LinearProgressIndicator(
+                  builder: (_, value, _) => LinearProgressIndicator(
                     value: value,
                     minHeight: 6,
                     backgroundColor: isDark
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.black.withOpacity(0.08),
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : Colors.black.withValues(alpha: 0.08),
                     valueColor: AlwaysStoppedAnimation<Color>(accentColor),
                   ),
                 ),
@@ -479,7 +484,7 @@ class _IOSFabState extends State<_IOSFab> {
             borderRadius: BorderRadius.circular(100),
             boxShadow: [
               BoxShadow(
-                color: widget.accentColor.withOpacity(0.4),
+                color: widget.accentColor.withValues(alpha: 0.4),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -553,8 +558,8 @@ class _TaskBottomSheet extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
                       color: isDark
-                          ? Colors.white.withOpacity(0.2)
-                          : Colors.black.withOpacity(0.15),
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : Colors.black.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
@@ -575,8 +580,8 @@ class _TaskBottomSheet extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.white.withOpacity(0.07)
-                        : Colors.black.withOpacity(0.04),
+                        ? Colors.white.withValues(alpha: 0.07)
+                        : Colors.black.withValues(alpha: 0.04),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: CupertinoTextField(
@@ -589,8 +594,8 @@ class _TaskBottomSheet extends StatelessWidget {
                     placeholder: 'Task name',
                     placeholderStyle: TextStyle(
                       color: isDark
-                          ? Colors.white.withOpacity(0.3)
-                          : Colors.black.withOpacity(0.3),
+                          ? Colors.white.withValues(alpha: 0.3)
+                          : Colors.black.withValues(alpha: 0.3),
                     ),
                     style: TextStyle(
                       fontSize: 16,
@@ -648,7 +653,7 @@ class _EmptyState extends StatelessWidget {
           Icon(
             CupertinoIcons.checkmark_circle,
             size: 56,
-            color: textSecondary.withOpacity(0.4),
+            color: textSecondary.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 12),
           Text(
@@ -665,7 +670,7 @@ class _EmptyState extends StatelessWidget {
             'Tap "New Task" to get started',
             style: TextStyle(
               fontSize: 14,
-              color: textSecondary.withOpacity(0.7),
+              color: textSecondary.withValues(alpha: 0.7),
             ),
           ),
         ],

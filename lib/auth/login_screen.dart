@@ -14,7 +14,7 @@ import '../widgets/top_bar_button.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -62,15 +62,12 @@ class _LoginScreenState extends State<LoginScreen>
     final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
     final cardColor = isDark
         ? const Color(0xFF1C1C1E)
-        : Colors.white.withOpacity(0.9);
+        : Colors.white.withValues(alpha: 0.9);
     final textPrimary = isDark ? Colors.white : const Color(0xFF1C1C1E);
     final textSecondary = isDark
         ? const Color(0xFF8E8E93)
         : const Color(0xFF6E6E73);
     final accentColor = const Color(0xFF007AFF);
-    final fieldBg = isDark
-        ? Colors.white.withOpacity(0.07)
-        : Colors.black.withOpacity(0.04);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
@@ -117,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen>
                           borderRadius: BorderRadius.circular(18),
                           boxShadow: [
                             BoxShadow(
-                              color: accentColor.withOpacity(0.35),
+                              color: accentColor.withValues(alpha: 0.35),
                               blurRadius: 24,
                               offset: const Offset(0, 8),
                             ),
@@ -167,8 +164,8 @@ class _LoginScreenState extends State<LoginScreen>
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                 color: isDark
-                                    ? Colors.white.withOpacity(0.08)
-                                    : Colors.white.withOpacity(0.7),
+                                    ? Colors.white.withValues(alpha: 0.08)
+                                    : Colors.white.withValues(alpha: 0.7),
                                 width: 0.5,
                               ),
                             ),
@@ -186,8 +183,8 @@ class _LoginScreenState extends State<LoginScreen>
                                   iconColor: textSecondary,
                                   showDivider: true,
                                   dividerColor: isDark
-                                      ? Colors.white.withOpacity(0.08)
-                                      : Colors.black.withOpacity(0.07),
+                                      ? Colors.white.withValues(alpha: 0.08)
+                                      : Colors.black.withValues(alpha: 0.07),
                                 ),
 
                                 // Password field
@@ -283,8 +280,8 @@ class _LoginScreenState extends State<LoginScreen>
                           Expanded(
                             child: Divider(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.1)
-                                  : Colors.black.withOpacity(0.08),
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : Colors.black.withValues(alpha: 0.08),
                               thickness: 0.5,
                             ),
                           ),
@@ -301,8 +298,8 @@ class _LoginScreenState extends State<LoginScreen>
                           Expanded(
                             child: Divider(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.1)
-                                  : Colors.black.withOpacity(0.08),
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : Colors.black.withValues(alpha: 0.08),
                               thickness: 0.5,
                             ),
                           ),
@@ -380,8 +377,8 @@ class _LoginScreenState extends State<LoginScreen>
               height: 4,
               decoration: BoxDecoration(
                 color: isDark
-                    ? Colors.white.withOpacity(0.2)
-                    : Colors.black.withOpacity(0.15),
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
@@ -390,7 +387,7 @@ class _LoginScreenState extends State<LoginScreen>
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: const Color(0xFFFF3B30).withOpacity(0.12),
+                color: const Color(0xFFFF3B30).withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               child: const Icon(

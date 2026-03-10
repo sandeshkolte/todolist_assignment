@@ -13,7 +13,7 @@ import '../widgets/top_bar_button.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -61,8 +61,9 @@ class _SignupScreenState extends State<SignupScreen>
     int score = 0;
     if (pw.length >= 8) score++;
     if (pw.contains(RegExp(r'[A-Z]')) && pw.contains(RegExp(r'[a-z]'))) score++;
-    if (pw.contains(RegExp(r'[0-9]')) && pw.contains(RegExp(r'[!@#\$&*~]')))
+    if (pw.contains(RegExp(r'[0-9]')) && pw.contains(RegExp(r'[!@#\$&*~]'))) {
       score++;
+    }
     return score;
   }
 
@@ -101,15 +102,15 @@ class _SignupScreenState extends State<SignupScreen>
     final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
     final cardColor = isDark
         ? const Color(0xFF1C1C1E)
-        : Colors.white.withOpacity(0.9);
+        : Colors.white.withValues(alpha: 0.9);
     final textPrimary = isDark ? Colors.white : const Color(0xFF1C1C1E);
     final textSecondary = isDark
         ? const Color(0xFF8E8E93)
         : const Color(0xFF6E6E73);
     final accentColor = const Color(0xFF007AFF);
     final separatorColor = isDark
-        ? Colors.white.withOpacity(0.08)
-        : Colors.black.withOpacity(0.07);
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.07);
 
     final pwStrength = _passwordStrength(passwordController.text);
 
@@ -174,7 +175,7 @@ class _SignupScreenState extends State<SignupScreen>
                           borderRadius: BorderRadius.circular(18),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF007AFF).withOpacity(0.35),
+                              color: const Color(0xFF007AFF).withValues(alpha: 0.35),
                               blurRadius: 24,
                               offset: const Offset(0, 8),
                             ),
@@ -224,8 +225,8 @@ class _SignupScreenState extends State<SignupScreen>
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                 color: isDark
-                                    ? Colors.white.withOpacity(0.08)
-                                    : Colors.white.withOpacity(0.7),
+                                    ? Colors.white.withValues(alpha: 0.08)
+                                    : Colors.white.withValues(alpha: 0.7),
                                 width: 0.5,
                               ),
                             ),
@@ -325,8 +326,8 @@ class _SignupScreenState extends State<SignupScreen>
                                     color: filled
                                         ? _strengthColor(pwStrength)
                                         : (isDark
-                                              ? Colors.white.withOpacity(0.1)
-                                              : Colors.black.withOpacity(0.08)),
+                                              ? Colors.white.withValues(alpha: 0.1)
+                                              : Colors.black.withValues(alpha: 0.08)),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                 ),
@@ -505,8 +506,8 @@ class _SignupScreenState extends State<SignupScreen>
                           Expanded(
                             child: Divider(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.1)
-                                  : Colors.black.withOpacity(0.08),
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : Colors.black.withValues(alpha: 0.08),
                               thickness: 0.5,
                             ),
                           ),
@@ -523,8 +524,8 @@ class _SignupScreenState extends State<SignupScreen>
                           Expanded(
                             child: Divider(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.1)
-                                  : Colors.black.withOpacity(0.08),
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : Colors.black.withValues(alpha: 0.08),
                               thickness: 0.5,
                             ),
                           ),
@@ -608,8 +609,8 @@ class _SignupScreenState extends State<SignupScreen>
               height: 4,
               decoration: BoxDecoration(
                 color: isDark
-                    ? Colors.white.withOpacity(0.2)
-                    : Colors.black.withOpacity(0.15),
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
@@ -618,7 +619,7 @@ class _SignupScreenState extends State<SignupScreen>
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.12),
+                color: iconColor.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: iconColor, size: 28),
@@ -659,82 +660,6 @@ class _SignupScreenState extends State<SignupScreen>
           ],
         ),
       ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Form Field
-// ─────────────────────────────────────────────────────────────────────────────
-class _FormField extends StatelessWidget {
-  final TextEditingController controller;
-  final String placeholder;
-  final IconData icon;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final bool isDark;
-  final Color textColor;
-  final Color iconColor;
-  final bool showDivider;
-  final Color dividerColor;
-  final Widget? trailing;
-  final ValueChanged<String>? onChanged;
-
-  const _FormField({
-    required this.controller,
-    required this.placeholder,
-    required this.icon,
-    required this.isDark,
-    required this.textColor,
-    required this.iconColor,
-    required this.showDivider,
-    required this.dividerColor,
-    required this.obscureText,
-    required this.keyboardType,
-    this.trailing,
-    this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          child: Row(
-            children: [
-              Icon(icon, size: 18, color: iconColor),
-              const SizedBox(width: 12),
-              Expanded(
-                child: CupertinoTextField(
-                  controller: controller,
-                  placeholder: placeholder,
-                  obscureText: obscureText,
-                  keyboardType: keyboardType,
-                  onChanged: onChanged,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: textColor,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: -0.2,
-                  ),
-                  placeholderStyle: TextStyle(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
-                    fontSize: 16,
-                  ),
-                  decoration: const BoxDecoration(color: Colors.transparent),
-                ),
-              ),
-              if (trailing != null) trailing!,
-            ],
-          ),
-        ),
-        if (showDivider)
-          Divider(height: 1, thickness: 0.5, color: dividerColor, indent: 46),
-      ],
     );
   }
 }
@@ -781,7 +706,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: widget.accentColor.withOpacity(0.35),
+                color: widget.accentColor.withValues(alpha: 0.35),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -807,36 +732,3 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
 // ─────────────────────────────────────────────────────────────────────────────
 // Top Bar Button
 // ─────────────────────────────────────────────────────────────────────────────
-class _TopBarButton extends StatelessWidget {
-  final IconData icon;
-  final bool isDark;
-  final VoidCallback onTap;
-
-  const _TopBarButton({
-    required this.icon,
-    required this.isDark,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: isDark
-              ? Colors.white.withOpacity(0.1)
-              : Colors.black.withOpacity(0.06),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Icon(
-          icon,
-          size: 18,
-          color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-        ),
-      ),
-    );
-  }
-}
